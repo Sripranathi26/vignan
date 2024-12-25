@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>event management</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/1172849/pexels-photo-1172849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        }
+
+        #t {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <?php
+    $servername = "your_database_servername";
+    $username = "your_database_username";
+    $password = "your_database_password";
+    $dbname = "your_database_name";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $location = $_POST['location'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $sql = "INSERT INTO users (firstname, lastname, location, email, password)
+            VALUES ('$firstname', '$lastname', '$location', '$email', '$password')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<p>Registration successful!</p>";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+    $conn->close();
+    ?>
+
+    <p>
+        <h1 align="center"> Event Management sign-in Form</h1>
+
+        <marquee>Event Management Form</marquee>
+
+        <table border="0" align="center" cellspacing="20" id="t">
+
+            <form align="center" action="#" method="post">
+
+                <tr>
+
+                    <td>first Name:</td>
+
+                    <td><input type="text" id="firstname" name="firstname"></td>
+
+                    <br></tr>
+
+                <tr>
+                    <td><label>last Name:</label></td>
+
+                    <td><input type="text" id="lastname" name="lastname"><br></td>
+                </tr>
+                <tr>
+                    <td><label>location:</label></td>
+                    <td><input type="text" id="location" name="location"><br></td>
+                </tr>
+
+                <tr>
+                    <td><label>Email id:</label></td>
+
+                    <td><input type="email" id="email" name="email"><br></td>
+                </tr>
+
+                <tr>
+                    <td>Password:</td>
+
+                    <td><input type="password" id="password" name="password"></td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2" align="center">
+
+                        <input type="submit" id="submit" value="submit" name="submit" onclick="match()">
+
+                        <input type="reset">
+
+                    </td>
+                </tr>
+
+            </form>
+        </table>
+    </p>
+
+</body>
+
+</html>
